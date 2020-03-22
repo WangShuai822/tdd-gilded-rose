@@ -13,15 +13,21 @@ class GoodsTest {
     }
 
     @Test
-    public void when_goods_in_sellIn() {
-        Goods goods = GoodsScenario.createCommonGood();
+    public void when_goods_in_sellIn_and_slow_rate() {
+        Goods goods = GoodsScenario.createCommonGoodWithSlowRate();
         goods.updateQuality(10);
+        should_get_correct_quality(goods);
+    }
+    @Test
+    public void when_goods_in_sellIn_and_fast_rate() {
+        Goods goods = GoodsScenario.createCommonGoodWithFastRate();
+        goods.updateQuality(15);
         should_get_correct_quality(goods);
     }
 
     @Test
     public void when_goods_out_sellIn() {
-        Goods goods = GoodsScenario.createCommonGood();
+        Goods goods = GoodsScenario.createCommonGoodWithSlowRate();
         goods.updateQuality(60);
         should_get_correct_quality(goods);
     }
