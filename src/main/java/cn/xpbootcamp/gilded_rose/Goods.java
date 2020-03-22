@@ -7,7 +7,7 @@ import lombok.extern.java.Log;
 @Log
 public class Goods {
     private String name;
-    private double sellIn;
+    private int sellIn;
     private double quality;
     private double rate; //保质期内，每天价值递减率
 
@@ -24,15 +24,29 @@ public class Goods {
     }
 
     private double getCurrentQuality(int days) {
-        double currentQuality = 0.0;
+        double currentQuality;
 
         if (name != null && name.equals("Aged Brie")) {
             currentQuality = quality * (1 + rate * days);
+        }else if(name != null && name.equals("Backstage pass")){
+            currentQuality = getBackstageQuality(days);
         } else {
             currentQuality = getCommonGoodsQuality(days);
         }
 
         log.info("current quality is :" + currentQuality);
+        return currentQuality;
+    }
+
+    private double getBackstageQuality(int days) {
+        double currentQuality = 0.0;
+        int beforeShow = sellIn - days;
+        if (beforeShow > 5 && beforeShow < 10) {
+            currentQuality = quality + (days - 10) * 2;
+        }
+        if (beforeShow > 0 && beforeShow <= 5) {
+            currentQuality = quality + 8 + beforeShow * 3;
+        }
         return currentQuality;
     }
 
@@ -46,9 +60,9 @@ public class Goods {
         //超过保质期，质量双倍下降
         if (days > sellIn) {
             //到保质期时的价值
-            double qualityInSellIn = quality * (1 - this.getRate() * sellIn);
+            double qualityInSellIn = quality * (1 - rate * sellIn);
             if (qualityInSellIn > 0) {
-                currentQuality = qualityInSellIn - quality * this.getRate() * (days - sellIn) * 2;
+                currentQuality = qualityInSellIn - quality * rate * (days - sellIn) * 2;
             }
         }
         return currentQuality;
