@@ -12,7 +12,14 @@ public class Goods {
     private double rate; //保质期内，每天价值递减率
 
     public void updateQuality(int days) {
-        double currentQuality = getCurrentQuality(days) >= 0 ? getCurrentQuality(days) : 0;
+        double currentQuality = getCurrentQuality(days);
+        if (currentQuality < 0) {
+            currentQuality = 0;
+        }
+        if (currentQuality > 50) {
+            currentQuality = 50;
+        }
+        log.info("update quality: " + currentQuality);
         this.setQuality(currentQuality);
     }
 

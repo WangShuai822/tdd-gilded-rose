@@ -36,8 +36,8 @@ class GoodsTest {
     public void should_increase_quality_when_goods_is_aged_brie() {
         Goods goods = GoodsScenario.createAgedBrieGoods();
         double originQuality = goods.getQuality();
-        goods.updateQuality(10);
-        assertTrue(goods.getQuality() > originQuality);
+        goods.updateQuality(15);
+        assertTrue(goods.getQuality() > originQuality && goods.getQuality() <= 50);
     }
 
 }
