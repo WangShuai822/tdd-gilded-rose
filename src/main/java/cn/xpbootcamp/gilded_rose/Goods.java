@@ -19,7 +19,7 @@ public class Goods {
     private double getCurrentQuality(int days) {
         double currentQuality = 0.0;
 
-        if (name.equals("Aged Brie")) {
+        if (name != null && name.equals("Aged Brie")) {
             currentQuality = quality * (1 + rate * days);
         } else {
             currentQuality = getCommonGoodsQuality(days);
